@@ -3,289 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Portal Masterpiece V9 🔒</title>
+    <title>Masterpiece Student Portal V10 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #ff4081; --bg: #0a0e1a; --glass: rgba(255, 255, 255, 0.08); }
+        :root { --accent: #ff4081; --bg: #0a0e1a; --glass: rgba(255, 255, 255, 0.1); }
         body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background: var(--bg); color: white; }
         .main-bg { min-height: 100vh; background: radial-gradient(circle at top, #1a1a2e, #0a0e1a); display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; width: 95%; max-width: 850px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; outline: none; box-sizing: border-box; }
-        .btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; margin: 5px; transition: 0.3s; }
-        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; width: 100%; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 25px; width: 95%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); color: white; outline: none; box-sizing: border-box; }
+        .btn { background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 600; margin: 5px; transition: 0.3s; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 15px; width: 100%; }
         .folder { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; position: relative; border: 1px solid transparent; }
         .folder:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
-        .btn-delete { background: #ff3333; font-size: 10px; padding: 5px 8px; position: absolute; top: 5px; right: 5px; border-radius: 5px; border:none; color:white; }
+        .btn-delete { background: #ff3333; font-size: 10px; padding: 5px 8px; position: absolute; top: 5px; right: 5px; border-radius: 5px; border:none; color:white; cursor: pointer; }
         
         /* Result Styles */
-        .result-sheet { background: white; color: #222; padding: 30px; border-radius: 15px; border: 1px solid #ddd; }
-        .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; }
-        .student-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; font-size: 14px; }
+        .result-sheet { background: white; color: #222; padding: 30px; border-radius: 15px; }
+        .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 15px; }
+        .student-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f4f4f4; padding: 15px; border-radius: 10px; font-size: 14px; }
         .result-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .result-table th { background: #333; color: white; padding: 12px; }
-        .result-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        .result-table th { background: #333; color: white; padding: 10px; }
+        .result-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
         
         .hidden { display: none !important; }
-        @media print { .no-print { display: none !important; } .main-bg { background: white; } }
+        @media print { .no-print { display: none !important; } .main-bg { background: white; padding: 0; } .glass-card { border: none; box-shadow: none; background: white; color: black; } }
     </style>
 </head>
 <body class="main-bg">
 
-    <div id="externalUpload" class="glass-card hidden" style="max-width: 450px; text-align: center; margin-top: 50px;">
-        <h2 style="color:var(--accent)">📤 Photo Upload</h2>
-        <p>Enter details and select your picture</p>
-        <input type="text" id="extClass" placeholder="Enter Class Name">
-        <input type="text" id="extRoll" placeholder="Enter Roll Number">
-        <input type="file" id="extFile" accept="image/*" style="background:none; margin-top:10px;">
-        <button class="btn" style="width:100%; background:#2ecc71; margin-top:10px;" onclick="submitPhoto()">SEND PICTURE</button>
+    <div id="studentPortal" class="glass-card hidden" style="text-align: center;">
+        <h2 style="color:var(--accent)">📤 Photo Upload Portal</h2>
+        <p>Enter your details to link your photo to your record.</p>
+        <input type="text" id="upClass" placeholder="Enter Class Name (e.g. 10th)">
+        <input type="text" id="upRoll" placeholder="Enter Roll Number">
+        <input type="file" id="upFile" accept="image/*" style="background:none;">
+        <button class="btn" style="width:100%; background:#2ecc71" onclick="handleStudentUpload()">UPLOAD PICTURE</button>
     </div>
 
-    <div id="loginSection" class="glass-card" style="max-width: 400px; margin-top: 80px; text-align: center;">
-        <h2>ADMIN LOGIN</h2>
-        <input type="password" id="passInput" placeholder="Enter Password">
-        <button class="btn" style="width:100%" onclick="checkPass()">LOGIN</button>
+    <div id="adminLogin" class="glass-card" style="max-width: 400px; text-align: center; margin-top: 50px;">
+        <h2>🔐 Admin Access</h2>
+        <input type="password" id="adminPass" placeholder="Enter Secret Code">
+        <button class="btn" style="width:100%" onclick="login()">LOGIN</button>
     </div>
 
     <div id="dashboard" class="hidden" style="width: 100%; max-width: 900px;">
-        <div class="no-print" style="display: flex; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-            <button class="btn" onclick="showTab('addStudent')">➕ Add Student</button>
-            <button class="btn" onclick="showTab('viewData')">📁 Folders</button>
-            <button class="btn" onclick="showTab('createResult')">📜 Result</button>
+        <div class="no-print" style="text-align: center; margin-bottom: 20px;">
+            <button class="btn" onclick="showTab('add')">➕ Add Student</button>
+            <button class="btn" onclick="showTab('folders')">📁 View Folders</button>
+            <button class="btn" onclick="showTab('result')">📜 Create Result</button>
             <button class="btn" style="background:#3498db" onclick="showTab('settings')">⚙️ Settings</button>
         </div>
 
-        <div id="addStudentTab" class="glass-card tab-content hidden">
+        <div id="addTab" class="glass-card tab-content hidden">
             <h3>Register New Student</h3>
-            <input type="text" id="sName" placeholder="Full Name">
+            <input type="text" id="sName" placeholder="Student Name">
             <input type="text" id="fName" placeholder="Father Name">
-            <input type="text" id="rollNo" placeholder="Roll Number">
-            <input type="text" id="sClass" placeholder="Class">
-            <input type="text" id="sPhone" placeholder="Mobile">
-            <textarea id="sAddress" placeholder="Home Address"></textarea>
-            <button class="btn" style="width:100%; background:#2ecc71" onclick="saveStudent()">Save Records</button>
+            <input type="text" id="roll" placeholder="Roll Number">
+            <input type="text" id="cls" placeholder="Class">
+            <button class="btn" style="width:100%; background:#2ecc71" onclick="saveStudent()">SAVE STUDENT</button>
         </div>
 
         <div id="settingsTab" class="glass-card tab-content hidden">
             <h3>School Settings</h3>
-            <label>Upload School Logo:</label>
-            <input type="file" onchange="updateLogo(this)">
-            <hr style="border: 0.5px solid #444; margin: 20px 0;">
-            <h3>Public Upload Link</h3>
-            <p style="font-size: 12px; color:#aaa;">Generate a link to let students upload their photos.</p>
-            <button class="btn" style="background: #2ecc71;" onclick="generateLink()">Generate New Link</button>
-            <div id="linkContainer" style="display:none; margin-top:15px; background:#000; padding:15px; border-radius:10px;">
-                <input type="text" id="linkText" readonly style="color:#00ff00; background:#111; border:none; text-align:center;">
-                <button class="btn" onclick="copyLink()" style="width:100%">📋 Copy Link</button>
+            <input type="file" onchange="updateLogo(this)" id="logoInp">
+            <label for="logoInp">Upload School Logo</label>
+            <hr style="border:0.5px solid #444; margin:20px 0;">
+            <h3>Generate Upload Link</h3>
+            <button class="btn" style="background:#2ecc71" onclick="generateLink()">Get New Link</button>
+            <div id="linkBox" class="hidden" style="margin-top:15px;">
+                <input type="text" id="linkVal" readonly style="color:#00ff00; background:#000; text-align:center;">
+                <button class="btn" onclick="copyLink()">📋 Copy Link</button>
             </div>
         </div>
 
-        <div id="createResultTab" class="glass-card tab-content hidden">
+        <div id="resultTab" class="glass-card tab-content hidden">
             <h3>Generate Result Card</h3>
-            <input type="text" id="resClass" placeholder="Class">
-            <input type="text" id="resRoll" placeholder="Roll Number">
-            <select id="examType">
+            <input type="text" id="resCls" placeholder="Class">
+            <input type="text" id="resRoll" placeholder="Roll No">
+            <select id="exam">
                 <option value="First Annual Examination">First Annual</option>
                 <option value="Second Annual Examination">Second Annual</option>
             </select>
-            <div id="subjectsList">
-                <div class="subj-row" style="display: flex; gap: 5px;">
+            <div id="subjects">
+                <div class="subj-row" style="display:flex; gap:5px;">
                     <input type="text" placeholder="Subject">
                     <input type="number" placeholder="Total">
                     <input type="number" placeholder="Obtained">
-                    <input type="text" placeholder="Grade" style="width: 80px;">
+                    <input type="text" placeholder="Grade" style="width:80px;">
                 </div>
             </div>
-            <button class="btn" onclick="addSubjectRow()">+ Add Subject</button>
-            <button class="btn" style="background:#2ecc71" onclick="saveResult()">Save Result</button>
+            <button class="btn" onclick="addRow()">+ Add Subject</button>
+            <button class="btn" style="background:#2ecc71" onclick="saveResult()">SAVE RESULT</button>
         </div>
 
-        <div id="viewDataTab" class="glass-card tab-content hidden">
-            <h4 id="folderPath" style="color:var(--accent)">School Root</h4>
-            <div id="gridDisplay" class="folder-grid"></div>
+        <div id="foldersTab" class="glass-card tab-content hidden">
+            <h4 id="path" style="color:var(--accent)">Root /</h4>
+            <div id="display" class="folder-grid"></div>
         </div>
 
-        <div id="detailViewer" class="glass-card hidden">
-            <div class="no-print" style="display: flex; justify-content: space-between;">
-                <button id="backBtnGlobal" class="btn" style="background:#444">⬅ Back</button>
-                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ Print / Save PDF</button>
+        <div id="viewer" class="glass-card hidden">
+            <div class="no-print">
+                <button class="btn" style="background:#444" onclick="showTab('folders')">⬅ Back</button>
+                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ Print PDF</button>
             </div>
-            <div id="detailContent" style="margin-top: 20px;"></div>
+            <div id="vContent" style="margin-top:20px;"></div>
         </div>
     </div>
 
     <script>
-        const ADMIN_PASS = "MYSECRET786";
-        let db = JSON.parse(localStorage.getItem('SchoolDB_V9')) || { students: [], results: [], logo: null, links: [] };
+        const ADMIN_CODE = "MYSECRET786";
+        let db = JSON.parse(localStorage.getItem('PortalDB_V10')) || { students: [], results: [], logo: null, links: [] };
 
-        // Link handling
+        // 1. ROUTING LOGIC
         window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            const token = params.get('token');
-            if(token && db.links.includes(token)) {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('externalUpload').classList.remove('hidden');
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            if (token && db.links.includes(token)) {
+                // Link is valid, show ONLY student portal
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('studentPortal').classList.remove('hidden');
             }
         };
 
-        function checkPass() {
-            if(document.getElementById('passInput').value === ADMIN_PASS) {
-                document.getElementById('loginSection').classList.add('hidden');
+        function login() {
+            if(document.getElementById('adminPass').value === ADMIN_CODE) {
+                document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
-                showTab('viewData');
-            } else { alert("Incorrect Password!"); }
+                showTab('folders');
+            } else alert("Wrong Password!");
         }
 
-        function showTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-            document.getElementById('detailViewer').classList.add('hidden');
-            if(tab === 'addStudent') document.getElementById('addStudentTab').classList.remove('hidden');
-            if(tab === 'settings') document.getElementById('settingsTab').classList.remove('hidden');
-            if(tab === 'viewData') { document.getElementById('viewDataTab').classList.remove('hidden'); renderClasses(); }
-            if(tab === 'createResult') document.getElementById('createResultTab').classList.remove('hidden');
-        }
+        // 2. STUDENT UPLOAD
+        function handleStudentUpload() {
+            const c = document.getElementById('upClass').value.toLowerCase();
+            const r = document.getElementById('upRoll').value;
+            const file = document.getElementById('upFile').files[0];
+            const std = db.students.find(s => s.roll === r && s.cls === c);
 
-        // --- PUBLIC UPLOAD FUNCTIONS ---
-        function generateLink() {
-            const token = "UPLOAD-" + Date.now();
-            db.links.push(token); updateDB();
-            const fullLink = window.location.origin + window.location.pathname + "?token=" + token;
-            document.getElementById('linkText').value = fullLink;
-            document.getElementById('linkContainer').style.display = "block";
-        }
-
-        function copyLink() {
-            const input = document.getElementById("linkText");
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            alert("Link Copied to Clipboard!");
-        }
-
-        function submitPhoto() {
-            const cls = document.getElementById('extClass').value.toLowerCase();
-            const roll = document.getElementById('extRoll').value;
-            const file = document.getElementById('extFile').files[0];
-            const std = db.students.find(s => s.roll === roll && s.class === cls);
-
-            if(!std) return alert("Student not found! Check Roll No and Class.");
-            if(!file) return alert("Please select an image first!");
+            if(!std) return alert("Student not found! Contact Admin.");
+            if(!file) return alert("Select a photo!");
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 std.photo = e.target.result;
-                // Expire link after one use
+                // Expire token
                 db.links = db.links.filter(t => t !== new URLSearchParams(window.location.search).get('token'));
                 updateDB();
-                alert("Photo Uploaded Successfully!");
-                window.location.href = window.location.origin + window.location.pathname;
+                alert("Photo uploaded successfully! Folder updated.");
+                window.location.href = window.location.pathname; // Go back to login
             };
             reader.readAsDataURL(file);
         }
 
-        // --- CORE DATABASE FUNCTIONS ---
+        // 3. ADMIN FUNCTIONS
+        function showTab(t) {
+            document.querySelectorAll('.tab-content').forEach(x => x.classList.add('hidden'));
+            document.getElementById('viewer').classList.add('hidden');
+            document.getElementById(t + 'Tab').classList.remove('hidden');
+            if(t === 'folders') renderClasses();
+        }
+
+        function generateLink() {
+            const t = "TOK-" + Date.now();
+            db.links.push(t); updateDB();
+            const url = window.location.origin + window.location.pathname + "?token=" + t;
+            document.getElementById('linkVal').value = url;
+            document.getElementById('linkBox').classList.remove('hidden');
+        }
+
+        function copyLink() {
+            const el = document.getElementById('linkVal');
+            el.select(); navigator.clipboard.writeText(el.value);
+            alert("Link Copied!");
+        }
+
         function saveStudent() {
-            const s = {
+            db.students.push({
                 name: document.getElementById('sName').value,
                 father: document.getElementById('fName').value,
-                roll: document.getElementById('rollNo').value,
-                class: document.getElementById('sClass').value.toLowerCase(),
-                phone: document.getElementById('sPhone').value,
-                address: document.getElementById('sAddress').value,
+                roll: document.getElementById('roll').value,
+                cls: document.getElementById('cls').value.toLowerCase(),
                 photo: null
-            };
-            if(!s.name || !s.roll) return alert("Name and Roll No are required!");
-            db.students.push(s); updateDB(); alert("Student Registered!"); showTab('viewData');
+            });
+            updateDB(); alert("Student Registered!"); showTab('folders');
         }
 
         function renderClasses() {
-            const grid = document.getElementById('gridDisplay'); grid.innerHTML = "";
-            const classes = [...new Set(db.students.map(s => s.class))];
-            classes.forEach(c => { grid.innerHTML += `<div class="folder" onclick="renderStudents('${c}')">📁 Class ${c.toUpperCase()}</div>`; });
-        }
-
-        function renderStudents(c) {
-            const grid = document.getElementById('gridDisplay');
-            grid.innerHTML = `<button class="btn" style="grid-column:1/-1; background:#444;" onclick="renderClasses()">⬅ Back</button>`;
-            db.students.filter(s => s.class === c).forEach(s => {
-                grid.innerHTML += `<div class="folder" onclick="openFolder('${s.roll}','${s.class}')">
-                    <button class="btn-delete" onclick="deleteStudent('${s.roll}', event)">X</button>
-                    👤 ${s.roll}</div>`;
+            const grid = document.getElementById('display'); grid.innerHTML = "";
+            document.getElementById('path').innerText = "Root /";
+            const classes = [...new Set(db.students.map(s => s.cls))];
+            classes.forEach(c => {
+                grid.innerHTML += `<div class="folder" onclick="renderStudents('${c}')">📁 Class ${c.toUpperCase()}</div>`;
             });
         }
 
-        function openFolder(roll, cls) {
-            const grid = document.getElementById('gridDisplay');
-            grid.innerHTML = `<button class="btn" style="grid-column:1/-1; background:#444;" onclick="renderStudents('${cls}')">⬅ Back</button>`;
-            grid.innerHTML += `<div class="folder" onclick="viewInfo('${roll}')">📄 Info</div>`;
-            if(db.results.some(r => r.roll === roll && r.class === cls)) {
-                grid.innerHTML += `<div class="folder" style="border-color:var(--accent)" onclick="viewResult('${roll}','${cls}')">📜 Result</div>`;
+        function renderStudents(c) {
+            const grid = document.getElementById('display'); grid.innerHTML = "";
+            document.getElementById('path').innerText = `Root / ${c.toUpperCase()} /`;
+            db.students.filter(s => s.cls === c).forEach(s => {
+                grid.innerHTML += `<div class="folder" onclick="openFolder('${s.roll}','${s.cls}')">
+                    <button class="btn-delete" onclick="delStd('${s.roll}', event)">X</button>
+                    👤 ${s.roll}<br><small>${s.name}</small></div>`;
+            });
+        }
+
+        function openFolder(r, c) {
+            const grid = document.getElementById('display'); grid.innerHTML = "";
+            document.getElementById('path').innerText = `Root / ${c.toUpperCase()} / Roll ${r}`;
+            grid.innerHTML += `<div class="folder" onclick="viewInfo('${r}')">📄 Profile Info</div>`;
+            if(db.results.some(res => res.roll === r && res.cls === c)) {
+                grid.innerHTML += `<div class="folder" style="border-color:var(--accent)" onclick="viewRes('${r}','${c}')">📜 Result Card</div>`;
             }
         }
 
-        function viewInfo(roll) {
-            const s = db.students.find(x => x.roll === roll);
-            document.getElementById('backBtnGlobal').onclick = () => showTab('viewData');
-            document.getElementById('detailContent').innerHTML = `
+        function viewInfo(r) {
+            const s = db.students.find(x => x.roll === r);
+            document.getElementById('vContent').innerHTML = `
                 <div class="result-sheet" style="color:black">
                     <h2>Student Profile</h2>
-                    <div style="display:flex; gap:20px; align-items:center;">
-                        <img src="${s.photo || 'https://via.placeholder.com/100'}" style="width:120px; height:120px; border-radius:10px; object-fit:cover; border:2px solid #ddd;">
-                        <div>
-                            <p><b>Name:</b> ${s.name}</p>
-                            <p><b>Father:</b> ${s.father}</p>
-                            <p><b>Roll No:</b> ${s.roll}</p>
-                            <p><b>Class:</b> ${s.class.toUpperCase()}</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <p><b>Mobile:</b> ${s.phone}</p>
-                    <p><b>Address:</b> ${s.address}</p>
+                    <img src="${s.photo || ''}" style="width:120px; height:120px; border-radius:10px; object-fit:cover; border:1px solid #ddd;">
+                    <p><b>Name:</b> ${s.name}</p><p><b>Father:</b> ${s.father}</p>
+                    <p><b>Roll:</b> ${s.roll}</p><p><b>Class:</b> ${s.cls.toUpperCase()}</p>
                 </div>`;
-            document.getElementById('viewDataTab').classList.add('hidden');
-            document.getElementById('detailViewer').classList.remove('hidden');
+            document.getElementById('foldersTab').classList.add('hidden');
+            document.getElementById('viewer').classList.remove('hidden');
         }
 
-        function viewResult(roll, cls) {
-            const s = db.students.find(x => x.roll === roll);
-            const r = db.results.find(x => x.roll === roll && x.class === cls);
-            document.getElementById('backBtnGlobal').onclick = () => showTab('viewData');
-            let rows = ""; r.data.forEach(m => { rows += `<tr><td>${m.sub}</td><td>${m.tot}</td><td>${m.ob}</td><td>${m.grd}</td></tr>`; });
-
-            document.getElementById('detailContent').innerHTML = `
+        function viewRes(r, c) {
+            const s = db.students.find(x => x.roll === r);
+            const res = db.results.find(x => x.roll === r && x.cls === c);
+            let rows = ""; res.data.forEach(m => { rows += `<tr><td>${m.s}</td><td>${m.t}</td><td>${m.o}</td><td>${m.g}</td></tr>`; });
+            document.getElementById('vContent').innerHTML = `
                 <div class="result-sheet">
                     <div class="result-header">
                         <img src="${db.logo || ''}" style="height:50px">
-                        <div><h3>${r.exam}</h3></div>
+                        <div><h3>${res.exam}</h3></div>
                     </div>
                     <div style="display:flex; gap:15px; margin-bottom:15px;">
-                        <img src="${s.photo || 'https://via.placeholder.com/100'}" style="width:80px; height:80px; border-radius:10px; border:1px solid #ddd; object-fit:cover;">
+                        <img src="${s.photo || ''}" style="width:80px; height:80px; border-radius:10px; object-fit:cover; border:1px solid #ddd;">
                         <div class="student-meta" style="flex:1">
-                            <div>Name: <b>${s.name}</b></div><div>Roll: <b>${roll}</b></div>
-                            <div>Class: <b>${cls.toUpperCase()}</b></div><div>Father: <b>${s.father}</b></div>
+                            <div>Name: <b>${s.name}</b></div><div>Roll: <b>${r}</b></div>
+                            <div>Father: <b>${s.father}</b></div><div>Class: <b>${c.toUpperCase()}</b></div>
                         </div>
                     </div>
-                    <table class="result-table"><tr><th>Subject</th><th>Total</th><th>Marks</th><th>Grade</th></tr>${rows}</table>
+                    <table class="result-table"><tr><th>Subject</th><th>Total</th><th>Obt</th><th>Grade</th></tr>${rows}</table>
                 </div>`;
-            document.getElementById('viewDataTab').classList.add('hidden');
-            document.getElementById('detailViewer').classList.remove('hidden');
+            document.getElementById('foldersTab').classList.add('hidden');
+            document.getElementById('viewer').classList.remove('hidden');
         }
 
         function saveResult() {
-            const rc = document.getElementById('resClass').value.toLowerCase();
-            const rr = document.getElementById('resRoll').value;
             const rows = document.querySelectorAll('.subj-row');
             let mData = [];
             rows.forEach(row => {
                 const i = row.querySelectorAll('input');
-                if(i[0].value) mData.push({ sub: i[0].value, tot: i[1].value, ob: i[2].value, grd: i[3].value });
+                if(i[0].value) mData.push({ s: i[0].value, t: i[1].value, o: i[2].value, g: i[3].value });
             });
-            db.results.push({ class: rc, roll: rr, exam: document.getElementById('examType').value, data: mData });
-            updateDB(); alert("Result Card Saved!"); showTab('viewData');
+            db.results.push({ cls: document.getElementById('resCls').value.toLowerCase(), roll: document.getElementById('resRoll').value, exam: document.getElementById('exam').value, data: mData });
+            updateDB(); alert("Result Saved!"); showTab('folders');
         }
 
-        function addSubjectRow() {
+        function addRow() {
             const d = document.createElement('div'); d.className="subj-row"; d.style.display="flex"; d.style.gap="5px";
-            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Marks"> <input type="text" placeholder="Grade" style="width:80px;">`;
-            document.getElementById('subjectsList').appendChild(d);
+            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Obtained"> <input type="text" placeholder="Grade" style="width:80px;">`;
+            document.getElementById('subjects').appendChild(d);
         }
 
         function updateLogo(input) {
@@ -294,8 +277,8 @@
             reader.readAsDataURL(input.files[0]);
         }
 
-        function updateDB() { localStorage.setItem('SchoolDB_V9', JSON.stringify(db)); }
-        function deleteStudent(roll, e) { e.stopPropagation(); if(confirm("Delete student?")) { db.students = db.students.filter(s => s.roll !== roll); updateDB(); renderClasses(); } }
+        function updateDB() { localStorage.setItem('PortalDB_V10', JSON.stringify(db)); }
+        function delStd(r, e) { e.stopPropagation(); if(confirm("Delete?")) { db.students = db.students.filter(x => x.roll !== r); updateDB(); renderClasses(); } }
     </script>
 </body>
-    </html>
+</html>
