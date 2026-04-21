@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masterpiece Student Portal V8 🔒</title>
+    <title>Student Portal Masterpiece V9 🔒</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --accent: #ff4081; --bg: #0a0e1a; --glass: rgba(255, 255, 255, 0.08); }
@@ -17,6 +17,7 @@
         .folder:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
         .btn-delete { background: #ff3333; font-size: 10px; padding: 5px 8px; position: absolute; top: 5px; right: 5px; border-radius: 5px; border:none; color:white; }
         
+        /* Result Styles */
         .result-sheet { background: white; color: #222; padding: 30px; border-radius: 15px; border: 1px solid #ddd; }
         .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; }
         .student-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; font-size: 14px; }
@@ -31,18 +32,18 @@
 <body class="main-bg">
 
     <div id="externalUpload" class="glass-card hidden" style="max-width: 450px; text-align: center; margin-top: 50px;">
-        <h2 style="color:var(--accent)">📤 Photo Submission</h2>
-        <p>Enter details to upload your picture</p>
-        <input type="text" id="extClass" placeholder="Class">
-        <input type="text" id="extRoll" placeholder="Roll Number">
-        <input type="file" id="extFile" accept="image/*" style="background:none;">
-        <button class="btn" style="width:100%; background:#2ecc71;" onclick="submitPhoto()">UPLOAD NOW</button>
+        <h2 style="color:var(--accent)">📤 Photo Upload</h2>
+        <p>Enter details and select your picture</p>
+        <input type="text" id="extClass" placeholder="Enter Class Name">
+        <input type="text" id="extRoll" placeholder="Enter Roll Number">
+        <input type="file" id="extFile" accept="image/*" style="background:none; margin-top:10px;">
+        <button class="btn" style="width:100%; background:#2ecc71; margin-top:10px;" onclick="submitPhoto()">SEND PICTURE</button>
     </div>
 
     <div id="loginSection" class="glass-card" style="max-width: 400px; margin-top: 80px; text-align: center;">
         <h2>ADMIN LOGIN</h2>
-        <input type="password" id="passInput" placeholder="Secret Key">
-        <button class="btn" style="width:100%" onclick="checkPass()">ENTER</button>
+        <input type="password" id="passInput" placeholder="Enter Password">
+        <button class="btn" style="width:100%" onclick="checkPass()">LOGIN</button>
     </div>
 
     <div id="dashboard" class="hidden" style="width: 100%; max-width: 900px;">
@@ -54,34 +55,34 @@
         </div>
 
         <div id="addStudentTab" class="glass-card tab-content hidden">
-            <h3>Register Student</h3>
-            <input type="text" id="sName" placeholder="Student Name">
+            <h3>Register New Student</h3>
+            <input type="text" id="sName" placeholder="Full Name">
             <input type="text" id="fName" placeholder="Father Name">
-            <input type="text" id="rollNo" placeholder="Roll No">
+            <input type="text" id="rollNo" placeholder="Roll Number">
             <input type="text" id="sClass" placeholder="Class">
-            <input type="text" id="sPhone" placeholder="Phone">
-            <textarea id="sAddress" placeholder="Address"></textarea>
-            <input type="password" id="sPrivacy" placeholder="Set Privacy Code for this Student">
-            <button class="btn" style="width:100%; background:#2ecc71" onclick="saveStudent()">Register</button>
+            <input type="text" id="sPhone" placeholder="Mobile">
+            <textarea id="sAddress" placeholder="Home Address"></textarea>
+            <button class="btn" style="width:100%; background:#2ecc71" onclick="saveStudent()">Save Records</button>
         </div>
 
         <div id="settingsTab" class="glass-card tab-content hidden">
-            <h3>Portal Settings</h3>
-            <label>School Logo:</label>
+            <h3>School Settings</h3>
+            <label>Upload School Logo:</label>
             <input type="file" onchange="updateLogo(this)">
             <hr style="border: 0.5px solid #444; margin: 20px 0;">
-            <h3>Photo Upload Link</h3>
-            <button class="btn" style="background: #2ecc71;" onclick="generateLink()">Generate Link</button>
-            <div id="linkContainer" style="display:none; margin-top:10px;">
-                <input type="text" id="linkText" readonly style="color:#00ff00; background:#000;">
-                <button class="btn" onclick="copyLink()">📋 Copy Link</button>
+            <h3>Public Upload Link</h3>
+            <p style="font-size: 12px; color:#aaa;">Generate a link to let students upload their photos.</p>
+            <button class="btn" style="background: #2ecc71;" onclick="generateLink()">Generate New Link</button>
+            <div id="linkContainer" style="display:none; margin-top:15px; background:#000; padding:15px; border-radius:10px;">
+                <input type="text" id="linkText" readonly style="color:#00ff00; background:#111; border:none; text-align:center;">
+                <button class="btn" onclick="copyLink()" style="width:100%">📋 Copy Link</button>
             </div>
         </div>
 
         <div id="createResultTab" class="glass-card tab-content hidden">
             <h3>Generate Result Card</h3>
             <input type="text" id="resClass" placeholder="Class">
-            <input type="text" id="resRoll" placeholder="Roll No">
+            <input type="text" id="resRoll" placeholder="Roll Number">
             <select id="examType">
                 <option value="First Annual Examination">First Annual</option>
                 <option value="Second Annual Examination">Second Annual</option>
@@ -94,7 +95,7 @@
                     <input type="text" placeholder="Grade" style="width: 80px;">
                 </div>
             </div>
-            <button class="btn" onclick="addSubjectRow()">+ Subject</button>
+            <button class="btn" onclick="addSubjectRow()">+ Add Subject</button>
             <button class="btn" style="background:#2ecc71" onclick="saveResult()">Save Result</button>
         </div>
 
@@ -106,20 +107,20 @@
         <div id="detailViewer" class="glass-card hidden">
             <div class="no-print" style="display: flex; justify-content: space-between;">
                 <button id="backBtnGlobal" class="btn" style="background:#444">⬅ Back</button>
-                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ PDF</button>
+                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ Print / Save PDF</button>
             </div>
             <div id="detailContent" style="margin-top: 20px;"></div>
         </div>
     </div>
 
     <script>
-        const ADMIN_KEY = "MYSECRET786";
-        // Change 'masterDB_V8' to something else for a completely different "website" data.
-        const DB_NAME = 'masterDB_V8';
-        let db = JSON.parse(localStorage.getItem(DB_NAME)) || { students: [], results: [], logo: null, links: [] };
+        const ADMIN_PASS = "MYSECRET786";
+        let db = JSON.parse(localStorage.getItem('SchoolDB_V9')) || { students: [], results: [], logo: null, links: [] };
 
+        // Link handling
         window.onload = function() {
-            const token = new URLSearchParams(window.location.search).get('token');
+            const params = new URLSearchParams(window.location.search);
+            const token = params.get('token');
             if(token && db.links.includes(token)) {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('externalUpload').classList.remove('hidden');
@@ -127,11 +128,11 @@
         };
 
         function checkPass() {
-            if(document.getElementById('passInput').value === ADMIN_KEY) {
+            if(document.getElementById('passInput').value === ADMIN_PASS) {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 showTab('viewData');
-            } else alert("Wrong Password!");
+            } else { alert("Incorrect Password!"); }
         }
 
         function showTab(tab) {
@@ -143,20 +144,20 @@
             if(tab === 'createResult') document.getElementById('createResultTab').classList.remove('hidden');
         }
 
-        // PHOTO UPLOAD
+        // --- PUBLIC UPLOAD FUNCTIONS ---
         function generateLink() {
-            const token = "UP-" + Date.now();
+            const token = "UPLOAD-" + Date.now();
             db.links.push(token); updateDB();
-            const url = window.location.origin + window.location.pathname + "?token=" + token;
-            document.getElementById('linkText').value = url;
+            const fullLink = window.location.origin + window.location.pathname + "?token=" + token;
+            document.getElementById('linkText').value = fullLink;
             document.getElementById('linkContainer').style.display = "block";
         }
 
         function copyLink() {
-            const copyText = document.getElementById("linkText");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            alert("Link Copied!");
+            const input = document.getElementById("linkText");
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert("Link Copied to Clipboard!");
         }
 
         function submitPhoto() {
@@ -165,12 +166,13 @@
             const file = document.getElementById('extFile').files[0];
             const std = db.students.find(s => s.roll === roll && s.class === cls);
 
-            if(!std) return alert("Student not found!");
-            if(!file) return alert("Select File!");
+            if(!std) return alert("Student not found! Check Roll No and Class.");
+            if(!file) return alert("Please select an image first!");
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 std.photo = e.target.result;
+                // Expire link after one use
                 db.links = db.links.filter(t => t !== new URLSearchParams(window.location.search).get('token'));
                 updateDB();
                 alert("Photo Uploaded Successfully!");
@@ -179,7 +181,7 @@
             reader.readAsDataURL(file);
         }
 
-        // DATABASE LOGIC
+        // --- CORE DATABASE FUNCTIONS ---
         function saveStudent() {
             const s = {
                 name: document.getElementById('sName').value,
@@ -188,10 +190,10 @@
                 class: document.getElementById('sClass').value.toLowerCase(),
                 phone: document.getElementById('sPhone').value,
                 address: document.getElementById('sAddress').value,
-                privacyCode: document.getElementById('sPrivacy').value,
                 photo: null
             };
-            db.students.push(s); updateDB(); alert("Student Saved!"); showTab('viewData');
+            if(!s.name || !s.roll) return alert("Name and Roll No are required!");
+            db.students.push(s); updateDB(); alert("Student Registered!"); showTab('viewData');
         }
 
         function renderClasses() {
@@ -213,19 +215,10 @@
         function openFolder(roll, cls) {
             const grid = document.getElementById('gridDisplay');
             grid.innerHTML = `<button class="btn" style="grid-column:1/-1; background:#444;" onclick="renderStudents('${cls}')">⬅ Back</button>`;
-            grid.innerHTML += `<div class="folder" onclick="checkAccess('${roll}', 'info')">📄 Info</div>`;
+            grid.innerHTML += `<div class="folder" onclick="viewInfo('${roll}')">📄 Info</div>`;
             if(db.results.some(r => r.roll === roll && r.class === cls)) {
-                grid.innerHTML += `<div class="folder" style="border-color:var(--accent)" onclick="checkAccess('${roll}', 'result')">📜 Result</div>`;
+                grid.innerHTML += `<div class="folder" style="border-color:var(--accent)" onclick="viewResult('${roll}','${cls}')">📜 Result</div>`;
             }
-        }
-
-        function checkAccess(roll, type) {
-            const s = db.students.find(x => x.roll === roll);
-            if(s.privacyCode) {
-                const p = prompt("Enter Student Privacy Code:");
-                if(p !== s.privacyCode) return alert("Wrong Code!");
-            }
-            if(type === 'info') viewInfo(roll); else viewResult(roll, s.class);
         }
 
         function viewInfo(roll) {
@@ -234,9 +227,17 @@
             document.getElementById('detailContent').innerHTML = `
                 <div class="result-sheet" style="color:black">
                     <h2>Student Profile</h2>
-                    <img src="${s.photo || ''}" style="width:120px; border-radius:10px; margin-bottom:10px; border:1px solid #ddd;">
-                    <p><b>Name:</b> ${s.name}</p><p><b>Father:</b> ${s.father}</p>
-                    <p><b>Roll:</b> ${s.roll}</p><p><b>Class:</b> ${s.class.toUpperCase()}</p>
+                    <div style="display:flex; gap:20px; align-items:center;">
+                        <img src="${s.photo || 'https://via.placeholder.com/100'}" style="width:120px; height:120px; border-radius:10px; object-fit:cover; border:2px solid #ddd;">
+                        <div>
+                            <p><b>Name:</b> ${s.name}</p>
+                            <p><b>Father:</b> ${s.father}</p>
+                            <p><b>Roll No:</b> ${s.roll}</p>
+                            <p><b>Class:</b> ${s.class.toUpperCase()}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <p><b>Mobile:</b> ${s.phone}</p>
                     <p><b>Address:</b> ${s.address}</p>
                 </div>`;
             document.getElementById('viewDataTab').classList.add('hidden');
@@ -256,13 +257,13 @@
                         <div><h3>${r.exam}</h3></div>
                     </div>
                     <div style="display:flex; gap:15px; margin-bottom:15px;">
-                        <img src="${s.photo || ''}" style="width:80px; height:80px; border-radius:10px; border:1px solid #ddd;">
+                        <img src="${s.photo || 'https://via.placeholder.com/100'}" style="width:80px; height:80px; border-radius:10px; border:1px solid #ddd; object-fit:cover;">
                         <div class="student-meta" style="flex:1">
                             <div>Name: <b>${s.name}</b></div><div>Roll: <b>${roll}</b></div>
                             <div>Class: <b>${cls.toUpperCase()}</b></div><div>Father: <b>${s.father}</b></div>
                         </div>
                     </div>
-                    <table class="result-table"><tr><th>Subject</th><th>Total</th><th>Obtained</th><th>Grade</th></tr>${rows}</table>
+                    <table class="result-table"><tr><th>Subject</th><th>Total</th><th>Marks</th><th>Grade</th></tr>${rows}</table>
                 </div>`;
             document.getElementById('viewDataTab').classList.add('hidden');
             document.getElementById('detailViewer').classList.remove('hidden');
@@ -278,12 +279,12 @@
                 if(i[0].value) mData.push({ sub: i[0].value, tot: i[1].value, ob: i[2].value, grd: i[3].value });
             });
             db.results.push({ class: rc, roll: rr, exam: document.getElementById('examType').value, data: mData });
-            updateDB(); alert("Result Saved!"); showTab('viewData');
+            updateDB(); alert("Result Card Saved!"); showTab('viewData');
         }
 
         function addSubjectRow() {
             const d = document.createElement('div'); d.className="subj-row"; d.style.display="flex"; d.style.gap="5px";
-            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Obtained"> <input type="text" placeholder="Grade" style="width:80px;">`;
+            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Marks"> <input type="text" placeholder="Grade" style="width:80px;">`;
             document.getElementById('subjectsList').appendChild(d);
         }
 
@@ -293,8 +294,8 @@
             reader.readAsDataURL(input.files[0]);
         }
 
-        function updateDB() { localStorage.setItem(DB_NAME, JSON.stringify(db)); }
+        function updateDB() { localStorage.setItem('SchoolDB_V9', JSON.stringify(db)); }
         function deleteStudent(roll, e) { e.stopPropagation(); if(confirm("Delete student?")) { db.students = db.students.filter(s => s.roll !== roll); updateDB(); renderClasses(); } }
     </script>
 </body>
-</html>
+    </html>
