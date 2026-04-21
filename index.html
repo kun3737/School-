@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masterpiece Student Portal V6 🔒</title>
+    <title>Masterpiece Student Portal V7 🔒</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --accent: #ff4081; --bg: #0a0e1a; --glass: rgba(255, 255, 255, 0.08); }
         body, html { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background: var(--bg); color: white; overflow-x: hidden; }
         .main-bg { min-height: 100vh; background: radial-gradient(circle at top, #1a1a2e, #0a0e1a); display: flex; flex-direction: column; align-items: center; padding: 20px; }
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; width: 95%; max-width: 850px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; outline: none; box-sizing: border-box; }
-        .btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; margin: 5px; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; }
-        .btn-delete { background: #ff3333; font-size: 10px; padding: 5px 8px; position: absolute; top: 5px; right: 5px; border-radius: 5px; }
-        .btn-back { background: #444; margin-bottom: 15px; }
-        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; width: 100%; }
-        .folder { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; position: relative; border: 1px solid transparent; transition: 0.3s; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.3); color: white; outline: none; box-sizing: border-box; }
+        .btn { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; margin: 5px; transition: 0.3s; }
+        .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 15px; width: 100%; }
+        .folder { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; position: relative; border: 1px solid transparent; }
         .folder:hover { background: rgba(255,255,255,0.1); border-color: var(--accent); }
-        .std-photo { width: 90px; height: 90px; border-radius: 10px; object-fit: cover; border: 2px solid var(--accent); margin-bottom: 10px; background: #222; }
+        .btn-delete { background: #ff3333; font-size: 10px; padding: 5px 8px; position: absolute; top: 5px; right: 5px; border-radius: 5px; border:none; color:white; }
         
-        /* Result Styles */
+        /* Result Card UI */
         .result-sheet { background: white; color: #222; padding: 30px; border-radius: 15px; border: 1px solid #ddd; }
         .result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 15px; }
         .student-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; font-size: 14px; }
@@ -28,24 +26,26 @@
         .result-table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
         
         .hidden { display: none !important; }
-        @media print { .no-print { display: none !important; } .main-bg { background: white; padding: 0; } .result-sheet { border: none; } }
+        @media print { .no-print { display: none !important; } .main-bg { background: white; } }
     </style>
 </head>
 <body class="main-bg">
 
-    <div id="externalUpload" class="glass-card hidden" style="max-width: 400px; text-align: center; margin-top: 50px;">
-        <h3 id="uploadTitle">📤 Student Photo Portal</h3>
-        <p style="font-size: 12px; color: #aaa;">Enter details to upload student picture.</p>
-        <input type="text" id="extClass" placeholder="Target Class">
-        <input type="text" id="extRoll" placeholder="Target Roll Number">
-        <input type="file" id="extFile" accept="image/*" style="background: none; border: 1px dashed #666;">
-        <button class="btn" style="width: 100%; background: #2ecc71;" onclick="submitExternalPhoto()">SUBMIT PICTURE</button>
+    <div id="externalUpload" class="glass-card hidden" style="max-width: 450px; text-align: center; margin-top: 50px;">
+        <h2 style="color:var(--accent)">📤 Photo Submission</h2>
+        <p style="font-size: 13px;">Link Valid for One Session Only</p>
+        <hr style="border:0.5px solid #444; margin:20px 0;">
+        <input type="text" id="extClass" placeholder="Enter Your Class">
+        <input type="text" id="extRoll" placeholder="Enter Roll Number">
+        <input type="password" id="extSecurity" placeholder="Set Privacy Code (Required)">
+        <input type="file" id="extFile" accept="image/*" style="background:none; margin-top:10px;">
+        <button class="btn" style="width:100%; background:#2ecc71; margin-top:20px;" onclick="submitSecurePhoto()">SUBMIT PHOTO</button>
     </div>
 
     <div id="loginSection" class="glass-card" style="max-width: 400px; margin-top: 80px; text-align: center;">
-        <h2>ADMIN ACCESS</h2>
-        <input type="password" id="passInput" placeholder="Enter Secret Code">
-        <button class="btn" style="width:100%" onclick="checkPass()">LOGIN</button>
+        <h2>ADMIN LOGIN</h2>
+        <input type="password" id="passInput" placeholder="Secret Key">
+        <button class="btn" style="width:100%" onclick="checkPass()">ENTER DASHBOARD</button>
     </div>
 
     <div id="dashboard" class="hidden" style="width: 100%; max-width: 900px;">
@@ -57,13 +57,13 @@
         </div>
 
         <div id="settingsTab" class="glass-card tab-content hidden">
-            <h3>School Settings</h3>
-            <label>Upload School Logo:</label>
-            <input type="file" accept="image/*" onchange="updateLogo(this)">
-            <hr style="border: 0.5px solid #444;">
-            <h3>Photo Upload Link Generator</h3>
-            <button class="btn" style="background: #2ecc71;" onclick="generateSecureLink()">Generate One-Time Link</button>
-            <div id="linkOutput" style="margin-top: 10px; color: #00ff00; font-size: 11px; word-break: break-all; background: #000; padding: 10px; border-radius: 5px; display: none;"></div>
+            <h3>Portal Settings</h3>
+            <label>School Logo:</label>
+            <input type="file" onchange="updateLogo(this)">
+            <hr style="border: 0.5px solid #444; margin: 20px 0;">
+            <h3>Generate Submission Link</h3>
+            <button class="btn" style="background: #2ecc71;" onclick="generateLink()">Create One-Time Link</button>
+            <div id="linkOutput" style="margin-top: 15px; color: #00ff00; font-size: 11px; word-break: break-all; background: #000; padding: 15px; border-radius: 8px; display: none; border: 1px solid #333;"></div>
         </div>
 
         <div id="createResultTab" class="glass-card tab-content hidden">
@@ -81,234 +81,152 @@
                     <input type="text" placeholder="Subject">
                     <input type="number" placeholder="Total">
                     <input type="number" placeholder="Obtained">
+                    <input type="text" placeholder="Grade" style="width: 80px;">
                 </div>
             </div>
-            <button class="btn" onclick="addSubjectRow()">+ Add Subject</button>
+            <button class="btn" onclick="addSubjectRow()">+ Subject</button>
             <button class="btn" style="background:#2ecc71" onclick="saveResult()">Save Result</button>
         </div>
 
-        <div id="addStudentTab" class="glass-card tab-content hidden">
-            <h3>Register New Student</h3>
-            <input type="text" id="sName" placeholder="Student Name">
-            <input type="text" id="fName" placeholder="Father Name">
-            <input type="text" id="rollNo" placeholder="Roll No">
-            <input type="text" id="sClass" placeholder="Class">
-            <input type="text" id="mobile" placeholder="Mobile Number">
-            <textarea id="sAddress" placeholder="Address"></textarea>
-            <button class="btn" style="width:100%; background:#2ecc71" onclick="saveStudent()">Register Student</button>
-        </div>
-
         <div id="viewDataTab" class="glass-card tab-content hidden">
-            <h4 id="folderPath">School Root</h4>
+            <h4 id="folderPath" style="color:var(--accent)">School Root</h4>
             <div id="gridDisplay" class="folder-grid"></div>
         </div>
 
         <div id="detailViewer" class="glass-card hidden">
             <div class="no-print" style="display: flex; justify-content: space-between;">
-                <button id="backBtnGlobal" class="btn btn-back">⬅ Back</button>
-                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ Print / Save PDF</button>
+                <button id="backBtnGlobal" class="btn" style="background:#444">⬅ Back</button>
+                <button class="btn" style="background:#3498db" onclick="window.print()">🖨️ PDF / Print</button>
             </div>
-            <div id="detailContent"></div>
+            <div id="detailContent" style="margin-top: 20px;"></div>
         </div>
     </div>
 
     <script>
-        const THE_KEY = "MYSECRET786";
-        let db = JSON.parse(localStorage.getItem('finalDB')) || { students: [], results: [], logo: null, activeLinks: [] };
+        const ADMIN_KEY = "MYSECRET786";
+        let db = JSON.parse(localStorage.getItem('masterDB_V7')) || { students: [], results: [], logo: null, links: [] };
 
-        // 1. NAVIGATION & LOGIN
+        // INITIALIZATION
+        window.onload = function() {
+            const token = new URLSearchParams(window.location.search).get('token');
+            if(token && db.links.includes(token)) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('externalUpload').classList.remove('hidden');
+            }
+        };
+
         function checkPass() {
-            if(document.getElementById('passInput').value === THE_KEY) {
+            if(document.getElementById('passInput').value === ADMIN_KEY) {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 showTab('viewData');
-            } else alert("Wrong Password!");
+            } else alert("Access Denied!");
         }
 
         function showTab(tab) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
             document.getElementById('detailViewer').classList.add('hidden');
             if(tab === 'settings') document.getElementById('settingsTab').classList.remove('hidden');
-            if(tab === 'addStudent') document.getElementById('addStudentTab').classList.remove('hidden');
             if(tab === 'viewData') { document.getElementById('viewDataTab').classList.remove('hidden'); renderClasses(); }
             if(tab === 'createResult') document.getElementById('createResultTab').classList.remove('hidden');
-        }
-
-        // 2. LINK GENERATOR SYSTEM (UPGRADE)
-        function generateSecureLink() {
-            const token = "UPLOAD-" + Math.floor(Math.random() * 899999 + 100000);
-            db.activeLinks.push(token);
-            updateDB();
-            const link = window.location.href.split('?')[0] + "?token=" + token;
-            const output = document.getElementById('linkOutput');
-            output.innerText = link;
-            output.style.display = "block";
-        }
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const activeToken = urlParams.get('token');
-        if(activeToken) {
-            if(db.activeLinks.includes(activeToken)) {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('externalUpload').classList.remove('hidden');
-            } else {
-                alert("Error: Link Expired or Invalid!");
-                window.location.href = window.location.pathname;
+            if(tab === 'addStudent') { /* Simple Add function... */ 
+                let name = prompt("Name:"); let f = prompt("Father Name:"); let r = prompt("Roll:"); let c = prompt("Class:");
+                if(name && r) { db.students.push({name, father:f, roll:r, class:c.toLowerCase(), photo:null, privacyCode:null}); updateDB(); renderClasses(); }
             }
         }
 
-        function submitExternalPhoto() {
+        // ONE-TIME LINK LOGIC
+        function generateLink() {
+            const token = "TOKEN-" + Date.now();
+            db.links.push(token); updateDB();
+            const url = window.location.origin + window.location.pathname + "?token=" + token;
+            const output = document.getElementById('linkOutput');
+            output.innerText = url; output.style.display = "block";
+        }
+
+        function submitSecurePhoto() {
             const cls = document.getElementById('extClass').value.toLowerCase();
             const roll = document.getElementById('extRoll').value;
+            const code = document.getElementById('extSecurity').value;
             const file = document.getElementById('extFile').files[0];
-            const stdIndex = db.students.findIndex(s => s.roll === roll && s.class === cls);
+            const std = db.students.find(s => s.roll === roll && s.class === cls);
 
-            if(stdIndex === -1) return alert("Student not found!");
+            if(!std) return alert("Student record not found in system!");
+            if(!code) return alert("Please set a Privacy Code for your data!");
             if(!file) return alert("Select a photo!");
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                db.students[stdIndex].photo = e.target.result;
-                db.activeLinks = db.activeLinks.filter(t => t !== activeToken); // Expire token
+                std.photo = e.target.result;
+                std.privacyCode = code; // Data security upgrade
+                db.links = db.links.filter(t => t !== new URLSearchParams(window.location.search).get('token'));
                 updateDB();
-                alert("Success! Photo added to folder. Link is now closed.");
-                window.location.href = window.location.pathname;
+                alert("Submission Successful! Link Expired.");
+                window.location.href = window.location.origin + window.location.pathname;
             };
             reader.readAsDataURL(file);
         }
 
-        // 3. STUDENT & FOLDER LOGIC
-        function saveStudent() {
-            const s = { 
-                name: document.getElementById('sName').value, 
-                father: document.getElementById('fName').value, 
-                roll: document.getElementById('rollNo').value, 
-                class: document.getElementById('sClass').value.toLowerCase(), 
-                phone: document.getElementById('mobile').value, 
-                address: document.getElementById('sAddress').value,
-                photo: null 
-            };
-            db.students.push(s); updateDB();
-            alert("Student Registered!");
-            showTab('viewData');
-        }
-
+        // FOLDER LOGIC
         function renderClasses() {
-            const grid = document.getElementById('gridDisplay');
-            grid.innerHTML = "";
-            document.getElementById('folderPath').innerText = "School Root";
+            const grid = document.getElementById('gridDisplay'); grid.innerHTML = "";
             const classes = [...new Set(db.students.map(s => s.class))];
-            classes.forEach(c => {
-                grid.innerHTML += `<div class="folder" onclick="renderStudents('${c}')">📁 Class ${c.toUpperCase()}</div>`;
-            });
+            classes.forEach(c => { grid.innerHTML += `<div class="folder" onclick="renderStudents('${c}')">📁 Class ${c.toUpperCase()}</div>`; });
         }
 
         function renderStudents(c) {
             const grid = document.getElementById('gridDisplay');
-            grid.innerHTML = `<button class="btn btn-back" onclick="renderClasses()" style="grid-column: 1/-1;">⬅ Back to Root</button>`;
-            document.getElementById('folderPath').innerText = "Root > Class " + c.toUpperCase();
+            grid.innerHTML = `<button class="btn" style="grid-column:1/-1; background:#444;" onclick="renderClasses()">⬅ Back</button>`;
             db.students.filter(s => s.class === c).forEach(s => {
-                grid.innerHTML += `
-                    <div class="folder" onclick="openStudentFolder('${s.roll}','${s.class}')">
-                        <button class="btn-delete" onclick="deleteStudent('${s.roll}', event)">X</button>
-                        👤 Roll: ${s.roll}<br><small>${s.name}</small>
-                    </div>`;
+                grid.innerHTML += `<div class="folder" onclick="openStudentFolder('${s.roll}','${s.class}')">
+                    <button class="btn-delete" onclick="deleteStudent('${s.roll}', event)">X</button>
+                    👤 Roll: ${s.roll}</div>`;
             });
         }
 
         function openStudentFolder(roll, cls) {
             const grid = document.getElementById('gridDisplay');
-            grid.innerHTML = `<button class="btn btn-back" onclick="renderStudents('${cls}')" style="grid-column: 1/-1;">⬅ Back to Students</button>`;
-            document.getElementById('folderPath').innerText = `Class ${cls.toUpperCase()} > Roll ${roll}`;
-            
-            grid.innerHTML += `<div class="folder" onclick="viewInfo('${roll}')">📄 Personal Info</div>`;
+            grid.innerHTML = `<button class="btn" style="grid-column:1/-1; background:#444;" onclick="renderStudents('${cls}')">⬅ Back</button>`;
+            grid.innerHTML += `<div class="folder" onclick="checkPrivacy('${roll}', 'info')">📄 Personal Info</div>`;
             if(db.results.some(r => r.roll === roll && r.class === cls)) {
-                grid.innerHTML += `<div class="folder" style="border:1px solid var(--accent)" onclick="viewResult('${roll}','${cls}')">📜 Result Card</div>`;
+                grid.innerHTML += `<div class="folder" style="border-color:var(--accent)" onclick="checkPrivacy('${roll}', 'result')">📜 Result Card</div>`;
             }
         }
 
-        function viewInfo(roll) {
+        function checkPrivacy(roll, type) {
             const s = db.students.find(x => x.roll === roll);
-            const content = document.getElementById('detailContent');
-            document.getElementById('backBtnGlobal').onclick = () => {
-                document.getElementById('detailViewer').classList.add('hidden');
-                document.getElementById('viewDataTab').classList.remove('hidden');
-                openStudentFolder(roll, s.class);
-            };
-
-            content.innerHTML = `
-                <div class="result-sheet" style="color: black;">
-                    <h2 style="border-bottom: 2px solid var(--accent); padding-bottom: 10px;">STUDENT BIODATA</h2>
-                    <div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 20px;">
-                        <img src="${s.photo || 'https://via.placeholder.com/100'}" class="std-photo">
-                        <div style="line-height: 2;">
-                            <p><b>Name:</b> ${s.name}</p>
-                            <p><b>Father:</b> ${s.father}</p>
-                            <p><b>Roll No:</b> ${s.roll}</p>
-                            <p><b>Class:</b> ${s.class.toUpperCase()}</p>
-                            <p><b>Mobile:</b> ${s.phone}</p>
-                            <p><b>Address:</b> ${s.address}</p>
-                        </div>
-                    </div>
-                </div>`;
-            document.getElementById('viewDataTab').classList.add('hidden');
-            document.getElementById('detailViewer').classList.remove('hidden');
+            if(s.privacyCode) {
+                const check = prompt("Enter Student Privacy Code to unlock:");
+                if(check !== s.privacyCode) return alert("Wrong Code! Access Denied.");
+            }
+            if(type === 'info') viewInfo(roll); else viewResult(roll, s.class);
         }
 
         function viewResult(roll, cls) {
             const s = db.students.find(x => x.roll === roll);
             const r = db.results.find(x => x.roll === roll && x.class === cls);
-            const content = document.getElementById('detailContent');
+            document.getElementById('backBtnGlobal').onclick = () => { document.getElementById('detailViewer').classList.add('hidden'); document.getElementById('viewDataTab').classList.remove('hidden'); };
             
-            document.getElementById('backBtnGlobal').onclick = () => {
-                document.getElementById('detailViewer').classList.add('hidden');
-                document.getElementById('viewDataTab').classList.remove('hidden');
-                openStudentFolder(roll, cls);
-            };
+            let rows = "";
+            r.data.forEach(m => { rows += `<tr><td>${m.sub}</td><td>${m.tot}</td><td>${m.ob}</td><td>${m.grd}</td></tr>`; });
 
-            let tableHTML = `<table class="result-table"><tr><th>Subject</th><th>Total</th><th>Obtained</th></tr>`;
-            r.data.forEach(m => { tableHTML += `<tr><td>${m.sub}</td><td>${m.tot}</td><td>${m.ob}</td></tr>`; });
-            tableHTML += `</table>`;
-
-            content.innerHTML = `
+            document.getElementById('detailContent').innerHTML = `
                 <div class="result-sheet">
                     <div class="result-header">
-                        <img src="${db.logo || ''}" style="height: 60px; max-width: 150px;">
-                        <div style="text-align: right;">
-                            <h2 style="margin: 0;">RESULT CARD</h2>
-                            <p style="margin: 0; font-size: 12px;">${r.exam}</p>
+                        <img src="${db.logo || ''}" style="height:50px">
+                        <div style="text-align:right"><h3>${r.exam}</h3></div>
+                    </div>
+                    <div style="display:flex; gap:15px; margin-bottom:15px;">
+                        <img src="${s.photo || ''}" style="width:80px; height:80px; border-radius:10px; border:1px solid #ddd;">
+                        <div class="student-meta" style="flex:1">
+                            <div>Name: <b>${s.name}</b></div><div>Roll: <b>${roll}</b></div>
+                            <div>Class: <b>${cls.toUpperCase()}</b></div><div>Father: <b>${s.father}</b></div>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
-                        <img src="${s.photo || 'https://via.placeholder.com/100'}" class="std-photo">
-                        <div class="student-meta" style="flex: 1;">
-                            <div><b>Name:</b> ${s.name}</div>
-                            <div><b>Roll No:</b> ${roll}</div>
-                            <div><b>Father:</b> ${s.father}</div>
-                            <div><b>Class:</b> ${cls.toUpperCase()}</div>
-                            <div style="grid-column: 1/-1;"><b>Address:</b> ${s.address}</div>
-                        </div>
-                    </div>
-                    ${tableHTML}
+                    <table class="result-table"><tr><th>Subject</th><th>Total</th><th>Obt</th><th>Grade</th></tr>${rows}</table>
                 </div>`;
             document.getElementById('viewDataTab').classList.add('hidden');
             document.getElementById('detailViewer').classList.remove('hidden');
-        }
-
-        // 4. SETTINGS & HELPERS
-        function updateLogo(input) {
-            const reader = new FileReader();
-            reader.onload = (e) => { db.logo = e.target.result; updateDB(); alert("Logo Updated!"); };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        function deleteStudent(roll, e) {
-            e.stopPropagation();
-            if(confirm("Are you sure to delete this student and all records?")) {
-                db.students = db.students.filter(s => s.roll !== roll);
-                db.results = db.results.filter(r => r.roll !== roll);
-                updateDB(); renderClasses();
-            }
         }
 
         function saveResult() {
@@ -318,19 +236,25 @@
             let mData = [];
             rows.forEach(row => {
                 const i = row.querySelectorAll('input');
-                if(i[0].value) mData.push({ sub: i[0].value, tot: i[1].value, ob: i[2].value });
+                if(i[0].value) mData.push({ sub: i[0].value, tot: i[1].value, ob: i[2].value, grd: i[3].value });
             });
             db.results.push({ class: rc, roll: rr, exam: document.getElementById('examType').value, data: mData });
-            updateDB(); alert("Result Saved!"); showTab('viewData');
+            updateDB(); alert("Saved!"); showTab('viewData');
         }
 
         function addSubjectRow() {
             const d = document.createElement('div'); d.className="subj-row"; d.style.display="flex"; d.style.gap="5px";
-            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Obtained">`;
+            d.innerHTML = `<input type="text" placeholder="Subject"> <input type="number" placeholder="Total"> <input type="number" placeholder="Obtained"> <input type="text" placeholder="Grade" style="width:80px;">`;
             document.getElementById('subjectsList').appendChild(d);
         }
 
-        function updateDB() { localStorage.setItem('finalDB', JSON.stringify(db)); }
+        function updateLogo(input) {
+            const reader = new FileReader();
+            reader.onload = (e) => { db.logo = e.target.result; updateDB(); alert("Logo Updated!"); };
+            reader.readAsDataURL(input.files[0]);
+        }
+        function updateDB() { localStorage.setItem('masterDB_V7', JSON.stringify(db)); }
+        function deleteStudent(roll, e) { e.stopPropagation(); if(confirm("Delete student?")) { db.students = db.students.filter(s => s.roll !== roll); updateDB(); renderClasses(); } }
     </script>
 </body>
-          </html>
+</html>
